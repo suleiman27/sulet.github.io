@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Table with Password Protection</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    input {
+      padding: 5px;
+    }
+
+    button {
+      padding: 8px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Data Table with Password Protection</h2>
+
+  <table id="dataTable">
+    <tr>
+      <th>Date</th>
+      <th>Model</th>
+      <th>Lot</th>
+    </tr>
+  </table>
+
+  <div>
+    <label for="dateInput">Date:</label>
+    <input type="text" id="dateInput" placeholder="Enter date">
+
+    <label for="modelInput">Model:</label>
+    <input type="text" id="modelInput" placeholder="Enter model">
+
+    <label for="lotInput">Lot:</label>
+    <input type="text" id="lotInput" placeholder="Enter lot">
+
+    <button onclick="addData()">Add Data</button>
+  </div>
+
+  <div>
+    <label for="passwordInput">Password:</label>
+    <input type="password" id="passwordInput" placeholder="Enter password">
+    <button onclick="authenticate()">Authenticate</button>
+  </div>
+
+  <script>
+    let data = [];
+    let authenticated = false;
+
+    function addData() {
+      if (!authenticated) {
+        alert("Please authenticate first.");
+        return;
+      }
+
+      const date = document.getElementById("dateInput").value;
+      const model = document.getElementById("modelInput").value;
+      const lot = document.getElementById("lotInput").value;
+
+      if (date && model && lot) {
+        data.push({ date, model, lot });
+        updateTable();
+      } else {
+        alert("Please fill in all fields.");
+      }
+    }
+
+    function updateTable() {
+      const table = document.getElementById("dataTable");
+      table.innerHTML = "<tr><th>Date</th><th>Model</th><th>Lot</th></tr>";
+
+      data.forEach(item => {
+        const row = table.insertRow();
+        const cell1 = row.insertCell(0);
+        const cell2 = row.insertCell(1);
+        const cell3 = row.insertCell(2);
+
+        cell1.textContent = item.date;
+        cell2.textContent = item.model;
+        cell3.textContent = item.lot;
+      });
+    }
+
+    function authenticate() {
+      const password = document.getElementById("passwordInput").value;
+
+      // For simplicity, use a hardcoded password. In real-world scenarios, you should implement a secure authentication mechanism.
+      if (password === "aaaa") {
+        authenticated = true;
+        alert("Authentication successful!");
+      } else {
+        alert("Authentication failed. Please try again.");
+      }
+    }
+  </script>
+
+</body>
+</html>
